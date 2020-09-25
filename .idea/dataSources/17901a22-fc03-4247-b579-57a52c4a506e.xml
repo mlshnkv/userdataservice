@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="userdateservice">
+  <database-model serializer="dbm" dbms="HSQLDB" family-id="HSQLDB" format-version="4.19">
+    <root id="1">
+      <ServerVersion>2.4.0</ServerVersion>
+    </root>
+    <database id="2" parent="1" name="PUBLIC">
+      <Current>1</Current>
+    </database>
+    <schema id="3" parent="2" name="INFORMATION_SCHEMA"/>
+    <schema id="4" parent="2" name="PUBLIC">
+      <Current>1</Current>
+    </schema>
+    <schema id="5" parent="2" name="SYSTEM_LOBS"/>
+    <table id="6" parent="4" name="ROLES"/>
+    <table id="7" parent="4" name="USERS"/>
+    <table id="8" parent="4" name="USERS_ROLES"/>
+    <column id="9" parent="6" name="ID">
+      <Position>1</Position>
+      <DataType>INTEGER|4s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="10" parent="6" name="NAME">
+      <Position>2</Position>
+      <DataType>VARCHAR(255)|12s</DataType>
+    </column>
+    <index id="11" parent="6" name="SYS_IDX_SYS_PK_10106_10107">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="12" parent="6" name="SYS_IDX_USER_ROLES_IDX_10108">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>NAME</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="13" parent="6" name="SYS_PK_10106">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="14" parent="6" name="SYS_IDX_USER_ROLES_IDX_10108">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>NAME</ColNames>
+    </key>
+    <column id="15" parent="7" name="LOGIN">
+      <Position>1</Position>
+      <DataType>VARCHAR(255)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="16" parent="7" name="NAME">
+      <Position>2</Position>
+      <DataType>VARCHAR(255)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="17" parent="7" name="PASSWORD">
+      <Position>3</Position>
+      <DataType>VARCHAR(255)|12s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="18" parent="7" name="SYS_IDX_SYS_PK_10100_10103">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>LOGIN</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="19" parent="7" name="SYS_PK_10100">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>LOGIN</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="20" parent="8" name="USER_LOGIN">
+      <Position>1</Position>
+      <DataType>VARCHAR(255)|12s</DataType>
+      <DefaultExpression>&apos;NULL&apos;</DefaultExpression>
+    </column>
+    <column id="21" parent="8" name="ROLE_ID">
+      <Position>2</Position>
+      <DataType>INTEGER|4s</DataType>
+      <DefaultExpression>NULL</DefaultExpression>
+    </column>
+    <index id="22" parent="8" name="SYS_IDX_HAS_USER_10112">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>USER_LOGIN</ColNames>
+    </index>
+    <index id="23" parent="8" name="SYS_IDX_HAS_ROLE_10110">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ROLE_ID</ColNames>
+    </index>
+    <foreign-key id="24" parent="8" name="HAS_USER">
+      <ColNames>USER_LOGIN</ColNames>
+      <RefTableName>USERS</RefTableName>
+      <RefKeyName>SYS_PK_10100</RefKeyName>
+      <RefColNames>LOGIN</RefColNames>
+      <OnDelete>cascade</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+    <foreign-key id="25" parent="8" name="HAS_ROLE">
+      <ColNames>ROLE_ID</ColNames>
+      <RefTableName>ROLES</RefTableName>
+      <RefKeyName>SYS_PK_10106</RefKeyName>
+      <RefColNames>ID</RefColNames>
+      <OnDelete>cascade</OnDelete>
+      <OnUpdate>cascade</OnUpdate>
+    </foreign-key>
+  </database-model>
+</dataSource>
