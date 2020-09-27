@@ -25,22 +25,22 @@
       <Position>2</Position>
       <DataType>VARCHAR(255)|12s</DataType>
     </column>
-    <index id="11" parent="6" name="SYS_IDX_SYS_PK_10106_10107">
+    <index id="11" parent="6" name="SYS_IDX_SYS_PK_10147_10148">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="12" parent="6" name="SYS_IDX_USER_ROLES_IDX_10108">
+    <index id="12" parent="6" name="SYS_IDX_USER_ROLES_IDX_10149">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>NAME</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="13" parent="6" name="SYS_PK_10106">
+    <key id="13" parent="6" name="SYS_PK_10147">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="14" parent="6" name="SYS_IDX_USER_ROLES_IDX_10108">
+    <key id="14" parent="6" name="SYS_IDX_USER_ROLES_IDX_10149">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>NAME</ColNames>
     </key>
@@ -59,12 +59,12 @@
       <DataType>VARCHAR(255)|12s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="18" parent="7" name="SYS_IDX_SYS_PK_10100_10103">
+    <index id="18" parent="7" name="SYS_IDX_SYS_PK_10141_10144">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>LOGIN</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="19" parent="7" name="SYS_PK_10100">
+    <key id="19" parent="7" name="SYS_PK_10141">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>LOGIN</ColNames>
       <Primary>1</Primary>
@@ -79,18 +79,18 @@
       <DataType>INTEGER|4s</DataType>
       <DefaultExpression>NULL</DefaultExpression>
     </column>
-    <index id="22" parent="8" name="SYS_IDX_HAS_USER_10112">
+    <index id="22" parent="8" name="SYS_IDX_HAS_USER_10153">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>USER_LOGIN</ColNames>
     </index>
-    <index id="23" parent="8" name="SYS_IDX_HAS_ROLE_10110">
+    <index id="23" parent="8" name="SYS_IDX_HAS_ROLE_10151">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ROLE_ID</ColNames>
     </index>
     <foreign-key id="24" parent="8" name="HAS_USER">
       <ColNames>USER_LOGIN</ColNames>
       <RefTableName>USERS</RefTableName>
-      <RefKeyName>SYS_PK_10100</RefKeyName>
+      <RefKeyName>SYS_PK_10141</RefKeyName>
       <RefColNames>LOGIN</RefColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
@@ -98,7 +98,7 @@
     <foreign-key id="25" parent="8" name="HAS_ROLE">
       <ColNames>ROLE_ID</ColNames>
       <RefTableName>ROLES</RefTableName>
-      <RefKeyName>SYS_PK_10106</RefKeyName>
+      <RefKeyName>SYS_PK_10147</RefKeyName>
       <RefColNames>ID</RefColNames>
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>

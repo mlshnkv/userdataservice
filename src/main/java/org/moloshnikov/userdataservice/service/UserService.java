@@ -21,14 +21,12 @@ public class UserService {
         return repository.save(user);
     }
 
-    public void delete(int id) {
-        repository.deleteById(id);
-//        checkNotFoundWithId(repository.delete(id), id);
+    public void delete(String login) {
+        repository.deleteByLogin(login);
     }
 
-    public User get(int id) {
-        return repository.findById(id).orElse(null);
-//        return checkNotFoundWithId(repository.get(id), id);
+    public User get(String login) {
+        return repository.getByLogin(login);
     }
 
     public List<User> getAll() {
