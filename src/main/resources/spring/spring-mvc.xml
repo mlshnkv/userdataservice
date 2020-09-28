@@ -7,8 +7,6 @@
 
     <context:component-scan base-package="org.moloshnikov.userdataservice.**.web"/>
     <context:component-scan base-package="org.moloshnikov.userdataservice.**.service"/>
-<!--    <import resource="spring-cache.xml"/>-->
-<!--    <import resource="spring-security.xml"/>-->
 
     <bean class="org.moloshnikov.userdataservice.web.json.JacksonObjectMapper" id="objectMapper"
           factory-method="getMapper"/>
@@ -29,12 +27,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+
     <bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean" id="conversionService">
-        <property name="formatters">
-            <set>
-                <bean class="org.moloshnikov.userdataservice.web.converter.DateTimeFormatters.LocalTimeFormatter"/>
-                <bean class="org.moloshnikov.userdataservice.web.converter.DateTimeFormatters.LocalDateFormatter"/>
-            </set>
-        </property>
     </bean>
 </beans>

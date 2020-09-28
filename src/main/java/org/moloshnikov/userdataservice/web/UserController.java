@@ -2,12 +2,15 @@ package org.moloshnikov.userdataservice.web;
 
 import org.moloshnikov.userdataservice.model.User;
 import org.moloshnikov.userdataservice.service.UserService;
+import org.moloshnikov.userdataservice.util.exception.Info;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -26,29 +29,32 @@ public class UserController {
         return userService.getAll();
     }
 
-    @GetMapping("/by")
-    public User get(@RequestParam String login) {
+    @GetMapping("/{login}")
+    public User get(@PathVariable String login) {
         return userService.get(login);
     }
 
-    @DeleteMapping("/by")
+    @DeleteMapping("/{login}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@RequestParam String login) {
+    public void delete(@PathVariable String login) {
         userService.delete(login);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
+    public ResponseEntity<Info> createWithLocation(@RequestBody @Valid User user) {
         User created = userService.create(user);
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
+        URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{login}")
                 .buildAndExpand(created.getLogin()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
+
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setLocation(location);
+        return new ResponseEntity<>(new Info(true), responseHeaders, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{login}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-        public void update(@RequestBody User user, @PathVariable String login) {
-        userService.update(user);
+    public ResponseEntity<Info> update(@RequestBody @Valid User user, @PathVariable String login) {
+        userService.update(user, login);
+        return new ResponseEntity<>(new Info(true), HttpStatus.OK);
     }
 }

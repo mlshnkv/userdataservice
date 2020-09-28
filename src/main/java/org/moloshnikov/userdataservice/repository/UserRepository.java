@@ -13,12 +13,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @EntityGraph(attributePaths = {"roles"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT u FROM User u WHERE u.login=:login")
-    User getByLogin (@Param("login") String login);
+    User getByLogin(@Param("login") String login);
 
     @Modifying
     @Transactional
     @Query("DELETE FROM User u WHERE u.login=:login")
     int deleteByLogin(@Param("login") String login);
-
-
 }

@@ -1,33 +1,24 @@
 package org.moloshnikov.userdataservice.util;
 
-//import org.moloshnikov.votingsystem.HasId;
-//import org.moloshnikov.votingsystem.model.AbstractBaseEntity;
-//import org.moloshnikov.votingsystem.model.Menu;
-//import org.moloshnikov.votingsystem.util.exception.IllegalTimeException;
-//import org.moloshnikov.votingsystem.util.exception.NotFoundException;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
-//import static org.moloshnikov.votingsystem.util.VotingUtil.deadLine;
+import org.moloshnikov.userdataservice.model.Role;
+import org.moloshnikov.userdataservice.model.User;
+import org.moloshnikov.userdataservice.util.exception.NotFoundException;
+import org.slf4j.Logger;
 
 public class ValidationUtil {
 
     private ValidationUtil() {
     }
 
-    public static <T> T checkNotFoundWithId(T object, int id) {
+    public static <T> T checkNotFoundWithId(T object, String id) {
         checkNotFoundWithId(object != null, id);
         return object;
     }
 
-    public static void checkNotFoundWithDate(boolean found, LocalDate date) {
-        checkNotFound(found, "date=" + date);
-    }
 
-
-    public static void checkNotFoundWithId(boolean found, int id) {
-        checkNotFound(found, "id=" + id);
+    public static void checkNotFoundWithId(boolean found, String login) {
+        checkNotFound(found, "login: " + login);
     }
 
     public static <T> T checkNotFound(T object, String msg) {
@@ -35,38 +26,42 @@ public class ValidationUtil {
         return object;
     }
 
-//    public static void checkNotFound(boolean found, String msg) {
-//        if (!found) {
-//            throw new NotFoundException("Not found entity with " + msg);
+    public static void checkNotFound(boolean found, String msg) {
+        if (!found) {
+            throw new NotFoundException("Not found entity with " + msg);
+        }
+    }
+
+//    public static void checkNew(User user) {
+//        if (!user.isNew()) {
+//            throw new IllegalArgumentException(user + " must be new");
 //        }
 //    }
 
-//    public static void checkNew(AbstractBaseEntity entity) {
-//        if (!entity.isNew()) {
-//            throw new IllegalArgumentException(entity + " must be new (id=null)");
-//        }
-//    }
+    public static void assureLoginConsistent(User user, String login) {
+//http://stackoverflow.com/a/32728226/548473
 
-//    public static void assureIdConsistent(HasId bean, int id) {
-////http://stackoverflow.com/a/32728226/548473
-//        if (bean.isNew()) {
-//            bean.setId(id);
-//        } else if (bean.id() != id) {
-//            throw new IllegalArgumentException(bean + " must be with id=" + id);
-//        }
-//    }
+        if (user.isNew()) {
+            user.setLogin(login);
+        } else if (!user.getLogin().equals(login)) {
+            throw new IllegalArgumentException(user + " must be with login: " + login);
+        }
+    }
 
-//    public static void checkDate(Menu menu) {
-//        if (menu.getDate() == null) {
-//            menu.setDate(LocalDate.now());
-//        }
-//    }
+    public static void assureIdConsistent(Role role, int id) {
+//http://stackoverflow.com/a/32728226/548473
 
-//    public static void checkDeadLine(LocalTime taken) {
-//        if (taken.isAfter(deadLine)) {
-//            throw new IllegalTimeException(String.format("Sorry, after %s you cannot vote", deadLine));
-//        }
-//    }
+        if (role.isNew()) {
+            role.setId(id);
+        } else if (!role.getId().equals(id)) {
+            throw new IllegalArgumentException(role + " must be with id: " + id);
+        }
+    }
+
+
+    public static String getMessage(Throwable e) {
+        return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
+    }
 
     //  http://stackoverflow.com/a/28565320/548473
     public static Throwable getRootCause(Throwable t) {
@@ -77,5 +72,12 @@ public class ValidationUtil {
             result = cause;
         }
         return result;
+    }
+
+    public static Throwable logAndGetRootCause(Logger log, Exception e) {
+        Throwable rootCause = ValidationUtil.getRootCause(e);
+        log.error(" at request " + rootCause);
+
+        return rootCause;
     }
 }

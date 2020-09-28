@@ -18,14 +18,14 @@
 
     <tx:annotation-driven/>
 
-    <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
+    <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
 
     <context:component-scan base-package="org.moloshnikov.userdataservice**.repository"/>
     <jpa:repositories base-package="org.moloshnikov.userdataservice**.repository"/>
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-          p:driverClassName="org.hsqldb.jdbcDriver"
+          p:driverClassName="org.postgresql.Driver"
           p:url="${database.url}"
           p:username="${database.username}"
           p:password="${database.password}"/>
@@ -40,13 +40,6 @@
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
                        value="${hibernate.use_sql_comments}"/>
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).JPA_PROXY_COMPLIANCE}" value="false"/>
-                <!--https://github.com/hibernate/hibernate-orm/blob/master/documentation/src/main/asciidoc/userguide/chapters/caching/Caching.adoc#caching-provider-jcache-->
-<!--                <entry key="#{T(org.hibernate.cfg.AvailableSettings).CACHE_REGION_FACTORY}"-->
-<!--                       value="org.hibernate.cache.jcache.internal.JCacheRegionFactory"/>-->
-<!--                <entry key="#{T(org.hibernate.cache.jcache.ConfigSettings).PROVIDER}"-->
-<!--                       value="org.ehcache.jsr107.EhcacheCachingProvider"/>-->
-<!--                <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SECOND_LEVEL_CACHE}" value="true"/>-->
-<!--                <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}" value="false"/>-->
             </map>
         </property>
 

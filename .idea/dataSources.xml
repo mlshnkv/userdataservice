@@ -7,5 +7,11 @@
       <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
       <jdbc-url>jdbc:hsqldb:mem:userdateservice</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="userservice@localhost" uuid="ed19157b-c712-47ff-becd-6e919ee558db">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/userservice</jdbc-url>
+    </data-source>
   </component>
 </project>
