@@ -7,8 +7,8 @@ FROM users;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (login, name, password)
-VALUES ('userlogin', 'Some User', 'password'),
-       ('adminlogin', 'Admin', 'admin');
+VALUES ('userlogin', 'Some User', 'Password1'),
+       ('adminlogin', 'Admin', 'Admin1');
 
 INSERT INTO roles (name)
 VALUES ('USER'),

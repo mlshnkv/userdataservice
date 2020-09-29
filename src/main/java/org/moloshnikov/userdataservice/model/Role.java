@@ -15,8 +15,9 @@ public class Role extends BaseEntity {
     protected Role() {
     }
 
-    public Role(String name) {
+    public Role(int id, String name) {
         super(name);
+        this.id = id;
     }
 
     public Integer getId() {

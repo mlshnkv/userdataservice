@@ -16,14 +16,8 @@ public class ValidationUtil {
         return object;
     }
 
-
     public static void checkNotFoundWithId(boolean found, String login) {
         checkNotFound(found, "login: " + login);
-    }
-
-    public static <T> T checkNotFound(T object, String msg) {
-        checkNotFound(object != null, msg);
-        return object;
     }
 
     public static void checkNotFound(boolean found, String msg) {
@@ -32,15 +26,8 @@ public class ValidationUtil {
         }
     }
 
-//    public static void checkNew(User user) {
-//        if (!user.isNew()) {
-//            throw new IllegalArgumentException(user + " must be new");
-//        }
-//    }
-
     public static void assureLoginConsistent(User user, String login) {
 //http://stackoverflow.com/a/32728226/548473
-
         if (user.isNew()) {
             user.setLogin(login);
         } else if (!user.getLogin().equals(login)) {
@@ -49,15 +36,12 @@ public class ValidationUtil {
     }
 
     public static void assureIdConsistent(Role role, int id) {
-//http://stackoverflow.com/a/32728226/548473
-
         if (role.isNew()) {
             role.setId(id);
         } else if (!role.getId().equals(id)) {
             throw new IllegalArgumentException(role + " must be with id: " + id);
         }
     }
-
 
     public static String getMessage(Throwable e) {
         return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
@@ -77,7 +61,6 @@ public class ValidationUtil {
     public static Throwable logAndGetRootCause(Logger log, Exception e) {
         Throwable rootCause = ValidationUtil.getRootCause(e);
         log.error(" at request " + rootCause);
-
         return rootCause;
     }
 }

@@ -4,6 +4,7 @@ package org.moloshnikov.userdataservice.web;
 import org.moloshnikov.userdataservice.util.ValidationUtil;
 import org.moloshnikov.userdataservice.util.exception.IllegalRequestDataException;
 import org.moloshnikov.userdataservice.util.exception.Info;
+import org.moloshnikov.userdataservice.util.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -26,7 +27,13 @@ public class ExceptionInfoHandler {
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(IllegalRequestDataException.class)
-    public Info illegalError(HttpServletRequest req, Exception e) {
+    public Info illegalError(Exception e) {
+        return logAndGetErrorInfo(e);
+    }
+
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(NotFoundException.class)
+    public Info notFound(NotFoundException e) {
         return logAndGetErrorInfo(e);
     }
 
@@ -35,11 +42,7 @@ public class ExceptionInfoHandler {
     public Info bindValidationError(HttpServletRequest req, Exception e) {
         BindingResult result = e instanceof BindException ?
                 ((BindException) e).getBindingResult() : ((MethodArgumentNotValidException) e).getBindingResult();
-        String[] details = result.getAllErrors().stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .toArray(String[]::new);
-
-        return logAndGetErrorInfo(e, details);
+        return logAndGetErrorInfo(e, bindingResultAsArray(result));
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -52,5 +55,12 @@ public class ExceptionInfoHandler {
         Throwable rootCause = ValidationUtil.logAndGetRootCause(log, e);
         return new Info(false,
                 details.length != 0 ? details : new String[]{ValidationUtil.getMessage(rootCause)});
+    }
+
+    public static String[] bindingResultAsArray(BindingResult bindingResult) {
+        return bindingResult.getAllErrors().stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .sorted()
+                .toArray(String[]::new);
     }
 }

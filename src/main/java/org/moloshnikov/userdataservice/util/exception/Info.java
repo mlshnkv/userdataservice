@@ -5,6 +5,10 @@ public class Info {
     private boolean success;
     private String[] errors;
 
+    public Info() {
+
+    }
+
     public Info(boolean success, String... errors) {
         this.success = success;
         this.errors = errors;

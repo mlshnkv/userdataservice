@@ -3,12 +3,12 @@ package org.moloshnikov.userdataservice.model;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @MappedSuperclass
 public abstract class BaseEntity {
-    @NotBlank(message = "The name must not be empty")
-    @Size(min = 2, max = 255, message = "Name is too short or too long")
+    public static final String NAME_NOTICE = "The name must not be empty";
+
+    @NotBlank(message = NAME_NOTICE)
     @Column(name = "name", nullable = false)
     private String name;
 
