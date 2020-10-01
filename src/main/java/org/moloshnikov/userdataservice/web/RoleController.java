@@ -41,20 +41,17 @@ public class RoleController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Info> createWithLocation(@RequestBody @Valid Role role) {
+    public ResponseEntity<Info> create(@RequestBody @Valid Role role) {
         Role created = roleService.create(role);
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
 
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setLocation(location);
-        return new ResponseEntity<>(new Info(true), responseHeaders, HttpStatus.CREATED);
+        return ResponseEntity.created(location).body(new Info(true));
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Info> update(@RequestBody @Valid Role role, @PathVariable int id) {
+    public void update(@RequestBody @Valid Role role, @PathVariable int id) {
         roleService.update(role, id);
-        return new ResponseEntity<>(new Info(true), HttpStatus.OK);
     }
 }

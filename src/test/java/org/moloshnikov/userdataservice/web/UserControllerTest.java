@@ -32,7 +32,7 @@ import static org.moloshnikov.userdataservice.web.ExceptionInfoHandler.bindingRe
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringJUnitWebConfig(locations = {"classpath:spring/spring-mvc.xml", "classpath:db/spring-db.xml"})
+@SpringJUnitWebConfig(locations = "classpath:spring-config.xml")
 @Transactional
 class UserControllerTest {
     private static final String REST_URL = UserController.REST_URL + '/';

@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Info> createWithLocation(@RequestBody @Valid User user) {
+    public ResponseEntity<Info> create(@RequestBody @Valid User user) {
         User created = userService.create(user);
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{login}")
